@@ -8,7 +8,7 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover. Make sure the path matches the one in the file element or else
              the rollover logs are placed in the working directory. -->
-            <fileNamePattern>${application.home}/logs/audit_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>logs/audit_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>5MB</maxFileSize>
@@ -19,7 +19,7 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>${application.home}/logs/debug.log</file>
+        <file>logs/debug.log</file>
         <encoder>
             <pattern>%date [%level] from %logger in %thread - %message%n%xException</pattern>
         </encoder>
@@ -31,7 +31,7 @@
         </encoder>
     </appender>
 
-    <logger name="samm.infrastructure.audit.service" additivity="false">
+    <logger name="samm.domain.audit.service" additivity="false">
         <appender-ref ref="AUDIT"/>
     </logger>
 

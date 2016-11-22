@@ -1,11 +1,11 @@
 package samm.domain.user.service;
 
+import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
+import org.springframework.ui.velocity.VelocityEngineUtils;
 import samm.dal.user.UserRepository;
 import samm.dal.user.WhiteListRepository;
 import samm.domain.user.model.User;
@@ -17,6 +17,8 @@ import samm.infrastructure.security.cipher.BCryptCipher;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import java.util.HashMap;
+import java.util.Map;
 
 import static samm.infrastructure.security.authentication.Principal.Role;
 
@@ -30,7 +32,7 @@ public class RegisterUserOperation {
     private final EmailService emailService;
     private final UserAuthenticator authenticator;
     private final WhiteListRepository whiteListRepository;
-    private final TemplateEngine templateEngine;
+    private VelocityEngine velocityEngine;
 
     @Inject
     public RegisterUserOperation(UserRepository repository,
@@ -38,13 +40,13 @@ public class RegisterUserOperation {
                                  UserAuthenticator authenticator,
                                  EmailService emailService,
                                  WhiteListRepository whiteListRepository,
-                                 TemplateEngine templateEngine) {
+                                 VelocityEngine velocityEngine) {
         this.repository = repository;
         this.cipher = cipher;
         this.emailService = emailService;
         this.authenticator = authenticator;
         this.whiteListRepository = whiteListRepository;
-        this.templateEngine = templateEngine;
+        this.velocityEngine = velocityEngine;
     }
 
     public ResponseEntity<?> execute(User user, String baseUrl) {
@@ -54,7 +56,7 @@ public class RegisterUserOperation {
         }
 
         if (!whiteListRepository.emailWhiteListed(user.getEmail(), Role.USER)) {
-            return new ResponseEntity<>("You're not authorised to use this application", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
         final User existingUser = repository.findUserByEmail(user.getEmail(), Role.USER);
@@ -67,14 +69,18 @@ public class RegisterUserOperation {
         user.setPassword(cipher.hash(user.getPassword()));
         repository.set(user);
 
-        final Context context = new Context();
-        context.setVariable("user", user.getForename());
-        context.setVariable("baseUrl", baseUrl);
-        context.setVariable("token", authenticator.generateJwtTokenForUser(user, Token.Type.ACTIVATE));
+        final Map model = new HashMap<>();
+        model.put("forename", user.getForename());
+        model.put("baseUrl", baseUrl);
+        model.put("token", authenticator.generateJwtTokenForUser(user, Token.Type.ACTIVATE));
 
-        emailService.sendEmail(user.getEmail(),
+        final String message = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine
+            , "userActivation.html", "UTF-8", model);
+
+        emailService.sendEmail(
+            user.getEmail(),
             "Welcome to Atos SAMM Portal. Please activate your account",
-            templateEngine.process("userActivation", context));
+            message);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

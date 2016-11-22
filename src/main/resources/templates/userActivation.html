@@ -4,14 +4,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </head>
     <body>
-        <p>
-            Dear th:text="${forename}"
-        </p>
+    <p>
+        Hello ${forename}
+    </p>
+
         <p>
             Your account for Atos Career Dialogue has been created, please click on the URL below to activate it:
         </p>
         <p>
-            <a href='th:text="${baseUrl}"/activate/th:text="${token}"/user'>Activation Link</a>
+            <a href="${baseUrl}/activate/${token}/user">Activation Link</a>
         </p>
         <p>
             <span>Regards, </span>
