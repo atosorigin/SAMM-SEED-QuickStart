@@ -17,8 +17,8 @@ import static samm.infrastructure.security.authentication.Principal.Role;
 @Table(name = "user")
 @Entity
 @NamedQueries({
-        @NamedQuery(name = UserEntity.FIND_ALL, query = "SELECT u FROM UserEntity u"),
-        @NamedQuery(name = UserEntity.FIND_BY_EMAIL, query = "SELECT u FROM UserEntity u WHERE u.email = :email AND u.role = :role")
+    @NamedQuery(name = UserEntity.FIND_ALL, query = "SELECT u FROM UserEntity u"),
+    @NamedQuery(name = UserEntity.FIND_BY_EMAIL, query = "SELECT u FROM UserEntity u WHERE u.email = :email AND u.role = :role")
 })
 public class UserEntity implements Serializable {
     public static final String FIND_ALL = "UserEntity.FIND_ALL";
@@ -143,15 +143,15 @@ public class UserEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         UserEntity that = (UserEntity) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(email, that.email) &&
-                Objects.equals(forename, that.forename) &&
-                Objects.equals(surname, that.surname) &&
-                Objects.equals(password, that.password) &&
-                Objects.equals(jobTitle, that.jobTitle) &&
-                Objects.equals(baseSite, that.baseSite) &&
-                Objects.equals(phone, that.phone) &&
-                Objects.equals(activationDate, that.activationDate) &&
-                Objects.equals(role, that.role);
+               Objects.equals(email, that.email) &&
+               Objects.equals(forename, that.forename) &&
+               Objects.equals(surname, that.surname) &&
+               Objects.equals(password, that.password) &&
+               Objects.equals(jobTitle, that.jobTitle) &&
+               Objects.equals(baseSite, that.baseSite) &&
+               Objects.equals(phone, that.phone) &&
+               Objects.equals(activationDate, that.activationDate) &&
+               Objects.equals(role, that.role);
     }
 
     @Override

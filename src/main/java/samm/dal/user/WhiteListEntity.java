@@ -15,12 +15,10 @@ import java.util.Objects;
 @Table(name = "white_list")
 @Entity
 @NamedQueries({
-        @NamedQuery(name = WhiteListEntity.FIND_BY_EMAIL, query = "SELECT W FROM WhiteListEntity W WHERE W.email = :email AND W.role = :role")
+    @NamedQuery(name = WhiteListEntity.FIND_BY_EMAIL, query = "SELECT W FROM WhiteListEntity W WHERE W.email = :email AND W.role = :role")
 })
 public class WhiteListEntity implements Serializable {
-
     public static final String FIND_BY_EMAIL = "WhiteListEntity.FIND_BY_EMAIL";
-
     public static final String EMAIL_PARAM = "email";
     public static final String ROLE_PARAM = "role";
 
@@ -64,8 +62,8 @@ public class WhiteListEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         WhiteListEntity that = (WhiteListEntity) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(email, that.email) &&
-                Objects.equals(role, that.role);
+               Objects.equals(email, that.email) &&
+               Objects.equals(role, that.role);
     }
 
     @Override

@@ -24,6 +24,7 @@ public class UserRepository {
     private static final Logger LOG = LoggerFactory.getLogger(UserRepository.class);
 
     private final RepositoryObjectFactory repositoryObjectFactory;
+
     @PersistenceContext
     private EntityManager em;
 
@@ -102,4 +103,3 @@ public class UserRepository {
         em.merge(userEntity);
     }
 }
-
