@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <appender name="AUDIT" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${application.home}/logs/audit.log</file>
+        <file>logs/audit.log</file>
         <encoder>
             <pattern>%date - %message%n%xException</pattern>
         </encoder>
