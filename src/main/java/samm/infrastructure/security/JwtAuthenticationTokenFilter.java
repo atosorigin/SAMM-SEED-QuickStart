@@ -10,6 +10,8 @@ import samm.infrastructure.security.authentication.UserAuthenticator;
 import samm.infrastructure.security.authentication.UserPrincipal;
 
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,18 +20,21 @@ import java.io.IOException;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
+@Named
+@Singleton
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     private static final String BEARER = "Bearer ";
-
     private final Log LOG = LogFactory.getLog(this.getClass());
 
     @Inject
     private UserAuthenticator userAuthenticator;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                    FilterChain chain) throws ServletException, IOException {
+    protected void doFilterInternal(final HttpServletRequest request,
+                                    final HttpServletResponse response,
+                                    final FilterChain chain)
+        throws ServletException, IOException {
 
         final String authHeaderValue = request.getHeader(AUTHORIZATION);
 
@@ -38,8 +43,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             final UserPrincipal userPrincipal = userAuthenticator.validateToken(tokenString);
             if (userPrincipal != null) {
                 final UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                    userPrincipal,
-                    null, userPrincipal.getAuthorities());
+                    userPrincipal, null, userPrincipal.getAuthorities());
 
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);

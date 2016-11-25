@@ -45,7 +45,7 @@ public class LoginEndpoint {
         }
 
         try {
-            final String encodedAuthValue = authHeader.substring("Basic ".length());
+            final String encodedAuthValue = authHeader.substring(BASIC.length());
             final byte[] decoded = Base64.getDecoder().decode(encodedAuthValue);
             final String[] authValue = new String(decoded, "UTF-8").split(":");
 

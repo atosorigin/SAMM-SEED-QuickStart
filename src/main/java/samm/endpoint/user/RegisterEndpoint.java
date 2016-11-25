@@ -24,6 +24,11 @@ public class RegisterEndpoint {
     @Transactional
     @RequestMapping(value = "/register/user", method = RequestMethod.POST)
     public ResponseEntity<?> register(@RequestBody User user, HttpServletRequest request) {
-        return registerUserOperation.execute(user, request.getLocalName());
+        final StringBuffer url = request.getRequestURL();
+        final String uri = request.getRequestURI();
+        final String ctx = request.getContextPath();
+        final String baseUrl = url.substring(0, url.length() - uri.length() + ctx.length()) + "/";
+
+        return registerUserOperation.execute(user, baseUrl);
     }
 }

@@ -54,14 +54,17 @@ public class UserPrincipal implements UserDetails {
         return Token.Type.valueOf(claims.get(ClaimProperties.TYPE).toString());
     }
 
-    public UserPrincipal(final String authToken, final Token.Status tokenStatus, final Claims claims) {
+    public UserPrincipal(final String authToken,
+                         final Token.Status tokenStatus,
+                         final Claims claims) {
         this.authToken = authToken;
         this.tokenStatus = tokenStatus;
         this.claims = claims;
         this.subject = claims.getSubject();
     }
 
-    public UserPrincipal(String authToken, Token.Status tokenStatus) {
+    public UserPrincipal(final String authToken,
+                         final Token.Status tokenStatus) {
         this.authToken = authToken;
         this.tokenStatus = tokenStatus;
         this.claims = null;

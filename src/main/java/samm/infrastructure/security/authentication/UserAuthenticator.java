@@ -37,12 +37,15 @@ public class UserAuthenticator {
         return "CHANGE_ME_TO_@VALUE";
     }
 
-    public String generateJwtTokenForUser(final User user, final Token.Type type) {
+    public String generateJwtTokenForUser(final User user,
+                                          final Token.Type type) {
         final int validFor = type == Token.Type.PASSWORD_RESET ? 1 : 24;
         return generateJwtTokenForUser(user, validFor, type);
     }
 
-    public String generateJwtTokenForUser(final User user, final int validFor, Token.Type type) {
+    public String generateJwtTokenForUser(final User user,
+                                          final int validFor,
+                                          final Token.Type type) {
         final Date issueDate = new Date();
 
         return Jwts.builder()
