@@ -1,6 +1,5 @@
 package samm.infrastructure.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,13 +10,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.inject.Inject;
+
 @SuppressWarnings("SpringJavaAutowiringInspection")
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
+    @Inject
     private JwtAuthenticationEntryPoint unauthorizedHandler;
 
 
@@ -50,7 +51,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/resource/**/*",
                 "/service/**/*"
             ).permitAll()
-            .antMatchers("/auth/**").permitAll()
+            .antMatchers(
+                "/login/*",
+                "/activate/*",
+                "/register/*",
+                "/reset/*"
+            ).permitAll()
             .anyRequest().authenticated();
 
         // Custom JWT based security filter

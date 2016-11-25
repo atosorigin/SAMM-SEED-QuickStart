@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import samm.domain.user.model.Credentials;
 import samm.domain.user.service.AuthenticateOperation;
-import samm.infrastructure.security.authentication.Principal;
+import samm.infrastructure.security.authentication.UserPrincipal;
 
 import javax.inject.Inject;
 import javax.persistence.NonUniqueResultException;
@@ -56,7 +56,7 @@ public class LoginEndpoint {
             final String username = authValue[0];
             final String password = authValue[1];
             try {
-                final Credentials credentials = authenticateOperation.execute(username, password, Principal.Role.USER);
+                final Credentials credentials = authenticateOperation.execute(username, password, UserPrincipal.Role.USER);
 
                 if (credentials == null) {
                     return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

@@ -20,7 +20,7 @@ import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 
-import static samm.infrastructure.security.authentication.Principal.Role;
+import static samm.infrastructure.security.authentication.UserPrincipal.Role;
 
 @Named
 @Singleton

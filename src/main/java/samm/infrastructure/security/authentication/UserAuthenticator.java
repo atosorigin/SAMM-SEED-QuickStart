@@ -53,26 +53,26 @@ public class UserAuthenticator {
             .setIssuedAt(issueDate)
             .setExpiration(DateUtils.addHours(issueDate, validFor))
             .signWith(SignatureAlgorithm.HS256, TextCodec.BASE64.encode(getSecretKey()))
-            .claim(Principal.ClaimProperties.ROLE, user.getRole().toString())
-            .claim(Principal.ClaimProperties.TYPE, type.toString())
-            .claim(Principal.ClaimProperties.ID, user.getId().toString())
-            .claim(Principal.ClaimProperties.FORENAME, user.getForename())
-            .claim(Principal.ClaimProperties.SURNAME, user.getSurname())
-            .claim(Principal.ClaimProperties.EMAIL, user.getEmail())
-            .claim(Principal.ClaimProperties.PHONE, user.getPhone())
+            .claim(UserPrincipal.ClaimProperties.ROLE, user.getRole().toString())
+            .claim(UserPrincipal.ClaimProperties.TYPE, type.toString())
+            .claim(UserPrincipal.ClaimProperties.ID, user.getId().toString())
+            .claim(UserPrincipal.ClaimProperties.FORENAME, user.getForename())
+            .claim(UserPrincipal.ClaimProperties.SURNAME, user.getSurname())
+            .claim(UserPrincipal.ClaimProperties.EMAIL, user.getEmail())
+            .claim(UserPrincipal.ClaimProperties.PHONE, user.getPhone())
             .compact();
     }
 
-    public Principal validateToken(final String token) {
+    public UserPrincipal validateToken(final String token) {
         try {
             final Claims claims = Jwts.parser()
                 .setSigningKey(TextCodec.BASE64.encode(getSecretKey()))
                 .parseClaimsJws(token).getBody();
-            return new Principal(token, Token.Status.VALID, claims);
+            return new UserPrincipal(token, Token.Status.VALID, claims);
         } catch (ExpiredJwtException expiredJwtException) {
-            return new Principal(token, Token.Status.EXPIRED);
+            return new UserPrincipal(token, Token.Status.EXPIRED);
         } catch (SignatureException signatureException) {
-            return new Principal(token, Token.Status.INVALID);
+            return new UserPrincipal(token, Token.Status.INVALID);
         }
     }
 
@@ -83,7 +83,7 @@ public class UserAuthenticator {
         return claims;
     }
 
-    public Principal authenticate(final String username, final String plaintextPassword, final Principal.Role role) {
+    public UserPrincipal authenticate(final String username, final String plaintextPassword, final UserPrincipal.Role role) {
         final User user = userRepository.findUserByEmail(username, role);
         if (user != null && user.getActivationDate() != null) {
             if (cipher.verify(plaintextPassword, user.getPassword())) {

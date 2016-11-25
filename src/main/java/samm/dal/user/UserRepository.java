@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static samm.infrastructure.security.authentication.Principal.Role;
+import static samm.infrastructure.security.authentication.UserPrincipal.Role;
 
 @Named
 @Singleton

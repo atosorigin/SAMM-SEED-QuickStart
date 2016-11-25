@@ -2,7 +2,7 @@ package samm.dal.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import samm.infrastructure.security.authentication.Principal;
+import samm.infrastructure.security.authentication.UserPrincipal;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -23,7 +23,7 @@ public class WhiteListRepository {
     public WhiteListRepository() {
     }
 
-    public boolean emailWhiteListed(String email, Principal.Role role) {
+    public boolean emailWhiteListed(String email, UserPrincipal.Role role) {
         final Query query = em.createNamedQuery(WhiteListEntity.FIND_BY_EMAIL);
         query.setParameter(WhiteListEntity.EMAIL_PARAM, email.toLowerCase());
         query.setParameter(WhiteListEntity.ROLE_PARAM, role.name().toUpperCase());

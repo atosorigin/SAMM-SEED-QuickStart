@@ -4,14 +4,14 @@ import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import samm.domain.user.model.Credentials;
-import samm.infrastructure.security.authentication.Principal;
+import samm.infrastructure.security.authentication.UserPrincipal;
 import samm.infrastructure.security.authentication.UserAuthenticator;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import static samm.infrastructure.security.authentication.Principal.Role;
+import static samm.infrastructure.security.authentication.UserPrincipal.Role;
 
 @Named
 @Singleton
@@ -26,16 +26,16 @@ public class AuthenticateOperation {
     }
 
     public Credentials execute(final String username, final String password, Role role) {
-        final Principal userPrincipal = authenticator.authenticate(username, password, role);
+        final UserPrincipal userUserPrincipal = authenticator.authenticate(username, password, role);
 
-        if (userPrincipal == null) {
+        if (userUserPrincipal == null) {
             return null;
         } else {
-            final Claims claims = userPrincipal.getClaims();
+            final Claims claims = userUserPrincipal.getClaims();
             final Credentials credentials = new Credentials();
 
-            credentials.setAuthToken(userPrincipal.getAuthToken());
-            credentials.setSubject(userPrincipal.getSubject());
+            credentials.setAuthToken(userUserPrincipal.getAuthToken());
+            credentials.setSubject(userUserPrincipal.getSubject());
 
             credentials.getUser().setId((String) claims.get("id"));
             credentials.getUser().setEmail((String) claims.get("email"));
