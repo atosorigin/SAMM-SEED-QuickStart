@@ -20,6 +20,8 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
+    private static final String BEARER = "Bearer ";
+
     private final Log LOG = LogFactory.getLog(this.getClass());
 
     @Inject
@@ -31,14 +33,17 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
         final String authHeaderValue = request.getHeader(AUTHORIZATION);
 
-        if (authHeaderValue != null) {
-            final String tokenString = authHeaderValue.substring("Bearer ".length());
+        if (authHeaderValue != null && authHeaderValue.contains(BEARER)) {
+            final String tokenString = authHeaderValue.substring(BEARER.length());
             final UserPrincipal userPrincipal = userAuthenticator.validateToken(tokenString);
-            final UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userPrincipal,
-                null, userPrincipal.getAuthorities());
+            if (userPrincipal != null) {
+                final UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                    userPrincipal,
+                    null, userPrincipal.getAuthorities());
 
-            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
 
         chain.doFilter(request, response);

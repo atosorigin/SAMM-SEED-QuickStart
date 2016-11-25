@@ -54,7 +54,7 @@ public class UserPrincipal implements UserDetails {
         return Token.Type.valueOf(claims.get(ClaimProperties.TYPE).toString());
     }
 
-    public UserPrincipal(String authToken, Token.Status tokenStatus, Claims claims) {
+    public UserPrincipal(final String authToken, final Token.Status tokenStatus, final Claims claims) {
         this.authToken = authToken;
         this.tokenStatus = tokenStatus;
         this.claims = claims;
@@ -83,7 +83,6 @@ public class UserPrincipal implements UserDetails {
     public String getSubject() {
         return subject;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
