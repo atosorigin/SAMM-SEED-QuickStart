@@ -11,7 +11,7 @@ angular.module("pamm").decorator("$log", ["$delegate", "$injector", function ($d
     };
     var auditEnabled = true;
     var logToServer = function (level, message) {
-        if (auditEnabled) {
+        if (auditEnabled && $injector.get("authService").getToken()) {
             $injector.get("dal").http.POST("/audit", {
                 level: level,
                 message: message.toString()
@@ -58,6 +58,6 @@ angular.module("pamm").decorator("$log", ["$delegate", "$injector", function ($d
         debug("[DEBUG] " + errorMsg);
     };
 
-    $delegate.info("Audit: Enabled Logging");
+    $delegate.info("Audit: Enabled Logging=" + auditEnabled);
     return $delegate;
 }]);

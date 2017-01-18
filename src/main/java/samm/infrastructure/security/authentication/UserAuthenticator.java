@@ -7,7 +7,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.impl.TextCodec;
 import org.apache.commons.lang3.time.DateUtils;
-import samm.dal.user.UserRepository;
+import samm.data.user.UserRepository;
 import samm.domain.user.model.User;
 import samm.infrastructure.security.cipher.Cipher;
 import samm.infrastructure.util.RandomKeyGenerator;

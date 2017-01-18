@@ -1,7 +1,6 @@
-@import url("variables.less");
-// Bootstrap overrides
-@import url("navbar-inverse-atos.less");
-@import url("bootstrap-override.less");
+@import url("branding.less");
+
+@import url("bootstrap-config.less");
 @import url("animate.less");
 @import url("breadcrumb.less");
 @import url("ui.less");
@@ -33,10 +32,6 @@ label {
   }
 }
 
-a {
-  cursor: pointer;
-}
-
 [data-ng-messages] {
   color: darkred;
   font-size: 9pt !important;
@@ -44,7 +39,7 @@ a {
   margin: 2px 3px 2px 3px;
 }
 
-[type="submit"], [data-ng-click] {
+a, [type="submit"], [data-ng-click] {
   cursor: pointer;
 }
 

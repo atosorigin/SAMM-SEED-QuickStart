@@ -2,7 +2,7 @@ package samm.domain.user.service;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import samm.dal.user.UserRepository;
+import samm.data.user.UserRepository;
 import samm.domain.user.model.User;
 import samm.infrastructure.security.authentication.UserPrincipal;
 import samm.infrastructure.security.cipher.BCryptCipher;

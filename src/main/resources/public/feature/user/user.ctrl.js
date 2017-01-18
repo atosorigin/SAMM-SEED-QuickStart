@@ -21,8 +21,8 @@ angular.module("pamm").controller("userCtrl", ["$rootScope", "$scope", "$state",
         vm.showAbout = function () {
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: "feature/common/about/about.html",
-                controller: "aboutCtrl",
+                templateUrl: "feature/common/info/info.html",
+                controller: "infoCtrl",
                 size: "lg",
                 backdrop: 'static'
             });

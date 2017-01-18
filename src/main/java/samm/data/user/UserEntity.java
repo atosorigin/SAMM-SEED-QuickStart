@@ -1,4 +1,4 @@
-package samm.dal.user;
+package samm.data.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

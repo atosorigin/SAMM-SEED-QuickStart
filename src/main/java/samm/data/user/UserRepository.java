@@ -1,8 +1,8 @@
-package samm.dal.user;
+package samm.data.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import samm.dal.RepositoryObjectFactory;
+import samm.data.RepositoryObjectFactory;
 import samm.domain.user.model.User;
 
 import javax.inject.Inject;

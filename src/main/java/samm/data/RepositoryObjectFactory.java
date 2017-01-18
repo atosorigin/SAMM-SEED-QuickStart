@@ -1,4 +1,4 @@
-package samm.dal;
+package samm.data;
 
 import samm.infrastructure.util.JSONHelper;
 

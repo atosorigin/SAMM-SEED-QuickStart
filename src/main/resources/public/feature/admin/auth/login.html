@@ -8,7 +8,7 @@
                    data-ng-model="login.credentials.username"
                    placeholder="User Name (email address)" required data-lowercase autofocus>
         </div>
-        <div data-ng-messages="loginForm.username.$error" data-ng-if="loginForm.$submitted" role="alert">
+        <div data-ng-messages="loginForm.username.$error" data-ng-show="loginForm.$submitted" role="alert">
             <div data-ng-message="required">Please enter your email address</div>
             <div data-ng-message="email">Please enter a valid email</div>
         </div>
@@ -18,7 +18,7 @@
             <input class="form-control" type="password" data-ng-model="login.credentials.password" id="password"
                    name="password" placeholder="Password" required>
         </div>
-        <div data-ng-messages="loginForm.password.$error" data-ng-if="loginForm.$submitted" role="alert">
+        <div data-ng-messages="loginForm.password.$error" data-ng-show="loginForm.$submitted" role="alert">
             <div data-ng-message="required">Please enter your password</div>
         </div>
 
